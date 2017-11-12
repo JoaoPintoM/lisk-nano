@@ -5,13 +5,13 @@ Feature: Saved Accounts
     And I click "add active account button"
     And I click "x button"
     And I wait 1 seconds
-    And I should see text "Account saved" in "toast" element
-    And I refresh the page
+    Then I should see text "Account saved" in "toast" element
+    When I refresh the page
     And I wait 2 seconds
     Then I should be logged in
-    And I click "send button"
-    And I should see empty "passphrase" field
-    And I fill in "1" to "amount" field
+    When I click "send button"
+    Then I should see empty "passphrase" field
+    When I fill in "1" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
     And I fill in passphrase of "genesis" to "passphrase" field
     And I click "submit button"
@@ -21,7 +21,7 @@ Feature: Saved Accounts
     And I fill in "2" to "amount" field
     And I fill in "537318935439898807L" to "recipient" field
     And I click "submit button"
-    And I should see alert dialog with title "Success" and text "Your transaction of 2 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
+    Then I should see alert dialog with title "Success" and text "Your transaction of 2 LSK to 537318935439898807L was accepted and will be processed in a few seconds."
 
   Scenario: should allow to save second account
     Given I'm logged in as "genesis"
@@ -30,13 +30,13 @@ Feature: Saved Accounts
     And I click "x button"
     And I wait 1 seconds
     And I click "logout button"
-    And I'm logged in as "empty account"
-    And I click "saved accounts" in main menu
+    Then I'm logged in as "empty account"
+    When I click "saved accounts" in main menu
     And I click "add active account button"
     Then I should see "saved accounts table" table with 2 lines
-    And I refresh the page
+    When I refresh the page
     And I wait 2 seconds
-    And I should be logged in as "empty account" account
+    Then I should be logged in as "empty account" account
 
   Scenario: should allow to forget second account
     Given I'm logged in as "genesis"
