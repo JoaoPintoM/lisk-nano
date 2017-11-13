@@ -47,8 +47,8 @@ export const activePeerSet = data =>
           config.nethash = response.nethash;
         }
         dispatch(peerSet(data, config));
-      }).catch(() => {
-        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') }));
+      }).catch((e) => {
+        dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') + e }));
       });
     } else {
       dispatch(peerSet(data, config));

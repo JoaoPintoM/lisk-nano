@@ -32,7 +32,7 @@ const loginMiddleware = store => next => (action) => {
         store.dispatch(accountLoggedIn(Object.assign({}, accountData, accountBasics,
           { delegate: {}, isDelegate: false })));
       }),
-  ).catch(() => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') })));
+  ).catch(e => store.dispatch(errorToastDisplayed({ label: i18next.t('Unable to connect to the node') + e })));
 };
 
 export default loginMiddleware;

@@ -85,17 +85,6 @@ node('lisk-nano') {
       }
     }
 
-    stage ('Run Eslint') {
-      try {
-        ansiColor('xterm') {
-          sh 'npm run --silent clean-build && npm run --silent copy-files && npm run --silent eslint'
-        }
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: Eslint failed')
-      }
-    }
-
     stage ('Build Nano') {
       try {
         sh '''
@@ -118,21 +107,6 @@ node('lisk-nano') {
       }
     }
 
-    stage ('Run Unit Tests') {
-      try {
-        ansiColor('xterm') {
-          sh '''
-          ON_JENKINS=true npm run --silent test
-          # Submit coverage to coveralls
-          cat coverage/*/lcov.info | coveralls -v
-          '''
-        }
-      } catch (err) {
-        echo "Error: ${err}"
-        fail('Stopping build: test suite failed')
-      }
-    }
-
     stage ('Run E2E Tests') {
       try {
         ansiColor('xterm') {
@@ -146,9 +120,7 @@ node('lisk-nano') {
 
             # Run end-to-end tests
 
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL https://testnet.lisk.io --cucumberOpts.tags @testnet --params.useTestnetPassphrase true
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @testnet --params.useTestnetPassphrase true --params.network testnet
-            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N
+            npm run --silent e2e-test -- --params.baseURL file://$WORKSPACE/app/build/index.html --params.liskCoreURL http://127.0.0.1:400$N --cucumberOpts.tags @only
             '''
           }
         }
