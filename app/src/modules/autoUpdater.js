@@ -1,6 +1,15 @@
 import i18n from './../i18n';
 
 export default ({ autoUpdater, dialog }, app, process) => { // eslint-disable-line no-unused-vars
+  const log = (message) => {
+    dialog.showMessageBox({
+      type: 'info',
+      buttons: [i18n.t('Restart'), i18n.t('Later')],
+      title: i18n.t('New version of Lisk Nano available'),
+      message: `${message}`,
+    });
+  };
+
   try {
     autoUpdater.checkForUpdates();
     setInterval(() => {
@@ -27,10 +36,12 @@ export default ({ autoUpdater, dialog }, app, process) => { // eslint-disable-li
       console.error('There was a problem updating the application');
       // eslint-disable-next-line no-console
       console.error(message);
+      log(message);
     });
   } catch (e) {
     // because autoUpdater doesn't work if the build is not signed
     // eslint-disable-next-line no-console
     console.log(e);
+    log(e);
   }
 };
